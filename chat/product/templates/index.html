@@ -22,19 +22,34 @@
         document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
         $.get("/get", { msg: rawText }).done(function(data) {
             var botHtml = '<p class="botText"><span>Бот:</span> ' + data + '</p>';
+            if (isCode(data)) {
+                botHtml = '<pre>' + botHtml + '</pre>';
+            }
             $("#chatbox").append(botHtml);
             document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
         });
     }
+
+    function isCode(text) {
+        var codeSigns = [';', '{', '}', '(', ')', '='];
+        for (var i = 0; i < codeSigns.length; i++) {
+            if (text.includes(codeSigns[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // $("#textInput").keypress(function(e) {
     //     if(e.which == 13) {
     //         e.preventDefault();
     //         getBotResponse();
     //     }
     // });
+
     $("#buttonInput").click(function() {
         getBotResponse();
-    })
+    });
 </script>
 <style>
 body {
