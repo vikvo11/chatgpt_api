@@ -10,20 +10,10 @@
     <p class="botText"><span>Бот:</span> Привет! Чем могу помочь?</p>
 </div>
 <div id="userInput">
-    <input id="textInput" type="text" name="msg" placeholder="Сообщение">
+    <textarea id="textInput" name="msg" placeholder="Сообщение"></textarea>
     <input id="buttonInput" type="submit" value="Отправить">
 </div>
 <script>
-    function isCode(text) {
-        var codeSigns = [';', '{', '}', '(', ')', '='];
-        for (var i = 0; i < codeSigns.length; i++) {
-            if (text.includes(codeSigns[i])) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     function getBotResponse() {
         var rawText = $("#textInput").val();
         var userHtml = '<p class="userText"><span>Вы:</span> ' + rawText + '</p>';
@@ -31,23 +21,20 @@
         $("#chatbox").append(userHtml);
         document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
         $.get("/get", { msg: rawText }).done(function(data) {
-            var formattedData = data;
-            if (isCode(data)) {
-                formattedData = '<pre>' + data + '</pre>';
-            }
-            var botHtml = '<p class="botText"><span>Бот:</span> ' + formattedData + '</p>';
+            var botHtml = '<p class="botText"><span>Бот:</span> ' + data + '</p>';
             $("#chatbox").append(botHtml);
             document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
         });
     }
-    $("#textInput").keypress(function(e) {
-        if(e.which == 13) {
-            getBotResponse();
-        }
-    });
+    // $("#textInput").keypress(function(e) {
+    //     if(e.which == 13) {
+    //         e.preventDefault();
+    //         getBotResponse();
+    //     }
+    // });
     $("#buttonInput").click(function() {
         getBotResponse();
-    });
+    })
 </script>
 <style>
 body {
@@ -64,13 +51,14 @@ body {
     margin-bottom: 10px;
 }
 #textInput {
-    width: 80%;
+    width: 100%;
+    height: 50px;
     border: none;
     padding: 10px;
     border-radius: 5px;
 }
 #buttonInput {
-    width: 18%;
+    width: 100%;
     border: none;
     padding: 10px;
     border-radius: 5px;
@@ -83,10 +71,6 @@ body {
 }
 .botText {
     color: #0000FF;
-}
-pre {
-    white-space: pre-wrap;
-    word-wrap: break-word;
 }
 </style>
 </body>
