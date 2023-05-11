@@ -22,5 +22,6 @@ RUN pip install --upgrade pip
 #RUN ls /usr/src/app
 #RUN echo $(ls /usr/src/app)
 #RUN ls /usr/src/app > directory_contents.txt
+RUN pip install -r requirements.txt
 # Запускаем приложение Python
 CMD ["python", "app.py"]
