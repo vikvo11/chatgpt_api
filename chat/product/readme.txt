@@ -5,3 +5,10 @@ docker system prune -a
 
 apk fix musl
 apk update musl
+
+docker images
+docker rmi [IMAGE_ID or IMAGE_NAME]
+
+docker-compose down --rmi all -v
+
+RUN pip install --pre openai
