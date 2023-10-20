@@ -5,7 +5,7 @@
 #CMD ["python", "app.py"]
 
 # Используем образ Python 3
-FROM python:3
+FROM python:3.11
 
 # Устанавливаем рабочую директорию в контейнере
 WORKDIR /usr/src/app
